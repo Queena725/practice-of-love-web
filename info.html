@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+  <style>@import url("https://use.typekit.net/rpg1trs.css");
+</style>
+  <link rel="stylesheet" href="info.css" type="text/css">
+   <script src="script2.js"></script>
+
+
+   
+   <style>
+  html,body {
+   font-family: "adobe-garamond-pro", serif;
+    margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+}
+</style>
+
+  <title>Practice of Love</title>
+
+  <style>
+    /* 전체 화면을 가득 채움 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      font-family: "adobe-garamond-pro", serif;
+      overflow: hidden; /* 개별 스크롤만 허용 */
+    }
+
+
+    /* 두 컬럼 전체 컨테이너 */
+    .content {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      margin-top: 60px; /* 네비게이션 높이만큼 띄움 */
+    }
+
+    /* 왼쪽 이미지 컬럼 */
+    .image-column {
+      flex: 1; /* 반반 */
+      overflow-y: auto;
+      padding: 80px 60px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 80px;
+      border-right: 1px solid transparent;
+    }
+
+    /* 오른쪽 텍스트 컬럼 */
+    .text-column {
+      flex: 1; /* 반반 */
+      overflow-y: auto;
+      padding: 80px 80px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      max-width: none; /* 폭 제한 없애기 */
+    }
+
+    /* 갤러리 이미지 */
+    #gallery img {
+      width: 60%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    #gallery img:hover {
+      transform: scale(1.03);
+    }
+
+    /* 타이틀 및 텍스트 */
+    h1 {
+      font-family: "altesse-std-24pt", cursive;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 32px;
+      margin-bottom: 20px;
+       text-align: center;
+    }
+
+    .authors {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px;
+    }
+
+    .authors a {
+      text-decoration: none;
+      color: black;
+      transition: color 0.2s ease;
+    }
+
+    .authors a:hover {
+      color: #d44720;
+    }
+
+    .quote {
+      font-family: "altesse-std-24pt", cursive;
+      font-size: 22px;
+      font-style: normal;
+      line-height: 1.8;
+      margin: 40px 0;
+      color: #000;
+    }
+
+    .right_p1 {
+      margin-top: 60px;
+      font-weight: bold;
+    }
+
+    /* 스크롤바 감추기 (선택) */
+    .image-column::-webkit-scrollbar,
+    .text-column::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <div class="top">
+    <a href="index.html"><img src="images/sunflower.png" alt="Home"></a>
+  </div>
+
+  <div class="top-left"><a href="authors.html">content</a></div>
+  <div class="top-right"><a href="info.html" target="_blank">Info</a></div>
+
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "adobe-garamond-pro", serif;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 1px solid transparent;
+  }
+
+  .navbar a {
+    text-decoration: none;
+    color: black;
+    font-family: "adobe-garamond-pro", serif; 
+    font-size: 18px;
+    letter-spacing: 0.5px;
+  }
+
+  .navbar a:hover {
+    opacity: 0.7;
+  }
+</style>
+
+  <!-- 두 컬럼 구조 -->
+  <div class="content">
+    <!-- 왼쪽: 이미지 갤러리 -->
+    <div class="image-column" id="gallery">
+      <img src="images/card.jpg" data-alt="images/card2.jpg" alt="Image 1">
+      <img src="images/card3.jpg" data-alt="images/card4.jpg" alt="Image 2">
+      <img src="images/card5.jpg" data-alt="images/card6.jpg" alt="Image 3">
+      <img src="images/card7.jpg" data-alt="images/card8.jpg" alt="Image 4">
+      <img src="images/card9.jpg" data-alt="images/card10.jpg" alt="Image 5">
+      <img src="images/card11.jpg" data-alt="images/card12.jpg" alt="Image 6">
+      <img src="images/card13.jpg" data-alt="images/card14.jpg" alt="Image 7">
+      <img src="images/card15.jpg" data-alt="images/card26.jpg" alt="Image 8">
+      <img src="images/card17.jpg" data-alt="images/card18.jpg" alt="Image 9">
+      <img src="images/card19.jpg" data-alt="images/card20.jpg" alt="Image 10">
+    </div>
+
+    <!-- 오른쪽: 텍스트 -->
+    <div class="text-column">
+ 
+    <img src="images/sunflower.png" alt="symbol" class="title-icon">
+
+    <br>
+    <br>
+      <p><br>I carried a circular pattern from the book into the website. This pattern comes from Hilma af Klint’s “What Stands Behind the Flowers” (Helianthus, Common Sunflower), an abstract diagram she created to represent the hidden spiritual qualities she believed lay behind plants. For her, the sunflower symbolized that “love is the greatest of all.” I was drawn to both the meaning and the form, which reminded me of someone personal, and decided to build my project around this symbol. That is how Practice of Love began.</p>
+
+
+      <div class="authors">
+  <div class="author">
+    <a href="auothers.html" target="_blank">
+      <span class="arrow">→</span>
+      <span class="name">Erich Fromm</span>
+   
+    </a>
+  </div>
+
+  <div class="author">
+    <a href="authors.html" target="_blank">
+      <span class="arrow">→</span>
+      <span class="name">Audre Lorde</span>
+  
+    </a>
+  </div>
+
+  <div class="author">
+    <a href="authors.html" target="_blank">
+      <span class="arrow">→</span>
+      <span class="name">bell hooks</span>
+
+    </a>
+  </div>
+</div>
+
+
+
+      <blockquote class="quote">Love is not just a feeling; it requires clarity and practice.</blockquote>
+
+      <p class="right_p1">My contribution</p>
+      <p>Practice of Love brings these ideas into a design experience. The publication takes the form of message cards that explain why and how it was designed. I wanted this project to invite people—whether in relationships, situationships, or simply curious—to pause, reflect, and consider love through design. It is about holding space for emotions and showing how design can make us think differently about love in the city.</p>
+    </div>
+  </div>
+
+  <!-- 이미지 hover 효과 -->
+  <script>
+    const images = document.querySelectorAll('#gallery img');
+    images.forEach(img => {
+      const original = img.src;
+      const alt = img.getAttribute('data-alt');
+      img.addEventListener('mouseenter', () => { if (alt) img.src = alt; });
+      img.addEventListener('mouseleave', () => { img.src = original; });
+      img.addEventListener('click', () => {
+        if (alt) {
+          const temp = img.src;
+          img.src = alt;
+          img.setAttribute('data-alt', temp);
+        }
+      });
+    });
+
+
+
+    // 이미지 hover 시 진동
+images.forEach(img => {
+  const original = img.src;
+  const alt = img.getAttribute('data-alt');
+
+  img.addEventListener('mouseenter', () => {
+    if (alt) img.src = alt;
+    if (navigator.vibrate) {
+      navigator.vibrate([100, 50, 100]); // 짧게 진동 두 번
+    }
+  });
+
+  img.addEventListener('mouseleave', () => {
+    img.src = original;
+  });
+
+  img.addEventListener('click', () => {
+    if (alt) {
+      const temp = img.src;
+      img.src = alt;
+      img.setAttribute('data-alt', temp);
+    }
+  });
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+:root { --dot-size: 10px; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "adobe-garamond-pro", serif;
+  background: #fff;
+}
+/* nav */
+.top-left, .top-right {
+  position: fixed;
+  z-index: 1000;
+  display: inline-block; /* block → inline-block 으로 바꾸기 */
+}
+
+/* “content”를 Info 옆으로 */
+.top-left {
+  top: 25px !important;
+  right: 120px !important; /* Info보다 왼쪽으로 약간 이동 */
+  left: auto !important;
+  bottom: auto !important;
+}
+
+/* “Info” 그대로 */
+.top-right {
+  right: 40px !important;
+  top: 25px !important;
+}
+
+/* link look */
+.top-left a, .top-right a {
+  color: #000;
+  text-decoration: none;
+  font-size: 16px;
+  transition: opacity .2s;
+}
+.top-left a:hover, .top-right a:hover { opacity: .6; }
+
+
+
+/* ===== Title (P/o/L) ===== */
+.title-group{
+  position: fixed;
+  inset: 0;
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform .7s ease-in-out;
+  z-index: 20;
+  pointer-events: none;   /* 그룹은 클릭 안 받게 */
+}
+.title-group .word{
+  position: absolute;
+  font-family: "altesse-std-24pt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24pt;
+  color:#000;
+  pointer-events: auto;   /* 단어는 클릭 가능 */
+  cursor: pointer;
+}
+/* 모서리 배치(벽쪽) */
+.title-group .side-left{
+  left: 20px; top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left center;
+}
+.title-group .side-right{
+  right: 20px; top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: right center;
+}
+.title-group .bottom-center{
+  left: 50%; bottom: 20px;
+  transform: translateX(-50%);
+}
+
+/* ===== Rings/Dots/Overlay ===== */
+.center{
+  position:absolute; top:50%; left:50%;
+  width:80px; height:80px; transform:translate(-50%,-50%);
+  border-radius:50%; background:#000; z-index:2;
+}
+#overlayImage{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%) scale(.98);
+  width:250px; height:250px; object-fit:cover;
+  z-index:5; opacity:0; pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease;
+}
+#overlayImage.visible{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+
+.dots{
+  position:absolute; top:50%; left:50%;
+  width:100%; height:100%; transform:translate(-50%,-50%);
+  z-index:3; pointer-events:none;
+}
+.dot{
+  position:absolute; width:var(--dot-size); height:var(--dot-size);
+  background:#000; border-radius:50%; pointer-events:auto;
+  transition: transform .12s ease, opacity .18s ease;
+}
+.dot:hover{ transform:scale(1.25); }
+.dimmed{ opacity:.18 !important; }
+
+canvas#rings{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%); z-index:1; pointer-events:none;
+}
+canvas#rings.dimmed{ opacity:.18; }
+
+/* hover 텍스트(원하면 사용) */
+#hoverText{
+  position: fixed; right:80px; bottom:80px; width:280px;
+  font-size:15px; line-height:1.6; color:#000; opacity:0;
+  transition:opacity .3s; z-index:30; text-align:left;
+}
+#hoverText.visible{ opacity:1; }
+
+/* ===== 절대 지울 것 =====
+   아래와 같은 옛 규칙이 파일 어딘가에 남아 있으면 클릭이 절대 안 됩니다.
+   .side-left { position: fixed ... }
+   .side-right { position: fixed ... }
+   .bottom-center { position: fixed ... }
+   .side-left, .side-right, .bottom-center { pointer-events: none; }
+*/
+
+/* === Practice / of / Love 위치 고정 === */
+.side-left {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: rotate(-90deg) translate(-50%, 0);
+  transform-origin: left center;
+  z-index: 1000;
+}
+
+.side-right {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: rotate(90deg) translate(50%, 0);
+  transform-origin: right center;
+  z-index: 1000;
+}
+
+.bottom-center {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+/* 🩵 폰트 통일 */
+.side-left,
+.side-right,
+.bottom-center {
+  font-family: "altesse-std-24pt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24pt;
+  margin: 18px;
+  color: #000;
+  pointer-events: none;
+}

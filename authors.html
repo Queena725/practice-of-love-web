@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="authors.css">
+  <script defer src="author.js"></script>
+
+  <body>
+  <div class="top-left">
+    <a href="index.html"><img src="images/sunflower.png" alt="Home"></a>
+  </div>
+
+  <div class="top-right">
+    <a href="info.html" target="_blank">Info</a>
+  </div>
+
+  <style>
+    @import url("https://use.typekit.net/rpg1trs.css");
+
+  
+
+    .top-left {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index:5000;
+    }
+
+    .top-left img {
+      width: 40px;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .top-right {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+       z-index:5000;
+    }
+
+    .top-right a {
+      text-decoration: none;
+      color: #000;
+      font-weight: 300;
+        pointer-events: auto;   /*  링크/이미지 클릭 가능 보장 */
+  cursor: pointer;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #000;
+      font-family: "adobe-garamond-pro", serif;
+      scroll-behavior: smooth;
+    }
+
+
+ 
+    .author-section {
+      width: 70%;
+      margin: 100px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 50px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .author-section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .author-section .text {
+      width: 50%;
+      font-size: 14px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .author-section img {
+      width: 40%;
+      height: auto;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+
+
+<video autoplay muted loop playsinline class="corner-video">
+  <source src="images/v.mov" type="video/mp4">
+</video>
+
+
+
+
+  <!-- side titles -->
+  <div class="side-left">Practice</div>
+  <div class="side-right">Love</div>
+  <div class="bottom-center">of</div>
+
+
+
+<div class="authors-grid">
+
+  <!-- bell hooks -->
+  <section class="author">
+    <img src="images/bell-hooks_1400x840.jpg" alt="bell hooks" class="portrait">
+    <div class="meta">
+      <div class="name">bell hooks</div>
+      <div class="details">1952–2021<br>American Author, Feminist, Activist</div>
+    </div>
+    <div class="desc">
+      <div class="title"><em>Clarity: Give Love Words</em></div>
+      <p>
+        bell hooks explored love, race, and gender as tools for social transformation.
+        She believed love was an act of will — a daily choice that connects healing with justice.
+        Her work bridges emotion and intellect, asking us to practice love as freedom.
+      </p>
+       <p>
+    For hooks, love was not a mere emotion but a conscious act of resistance —  
+    a way to unlearn domination and nurture care.  
+    In <em>All About Love</em>, she redefines love as “the will to extend oneself  
+    for the purpose of nurturing one’s own or another’s spiritual growth.”
+  </p>
+   <p>
+    She criticized how modern culture equates love with control or possession,  
+    reminding us that real love cannot exist without justice.  
+    Her writing turns love into an ethical practice — one that demands clarity, boundaries, and truth-telling.
+  </p>
+
+  <p>
+    Through her essays, hooks shows that love is both personal and political.  
+    To love fully, we must confront fear, nurture community, and reclaim tenderness  
+    as a source of strength.  
+    In this way, she invites us to make love a daily practice of freedom.
+  </p>
+
+    </div>
+  </section>
+
+  <!-- Erich Fromm -->
+  <section class="author">
+    <img src="images/erich-fromm.jpg" alt="Erich Fromm" class="portrait">
+    <div class="meta">
+      <div class="name">Erich Fromm</div>
+      <div class="details">1900–1980<br>German Psychologist, Philosopher</div>
+    </div>
+    <div class="desc">
+      <div class="title"><em>Is Love an Art?</em></div>
+      <p>
+        Erich Fromm viewed love as a discipline — a creative practice that must be learned, not merely felt.
+        In <em>The Art of Loving (1956)</em>, he wrote that love demands care, responsibility, respect, and knowledge.
+        These qualities transform affection into maturity and connect emotion with understanding.
+      </p>
+       <p>
+    Fromm believed that love was not something we fall into,  
+    but something we build through effort and awareness.  
+    Like any art, it requires practice — patience, humility, and the courage to give without expecting return.
+  </p>
+
+  <p>
+    He argued that the modern world confuses comfort with connection.  
+    In a society driven by consumption and loneliness,  
+    love becomes an act of resistance — a way to reclaim our capacity for empathy and presence.
+  </p>
+
+  <p>
+    To love, for Fromm, is to choose life over habit, care over indifference.  
+    It begins with self-knowledge and expands outward,  
+    transforming not only our relationships but the very way we exist with others.  
+    Love, in this sense, is a lifelong art — one that must be practiced every day.
+  </p>
+      
+    </div>
+  </section>
+
+  <!-- Audre Lorde -->
+  <section class="author">
+    <img src="images/Audre .jpeg" alt="Audre Lorde" class="portrait">
+    <div class="meta">
+      <div class="name">Audre Lorde</div>
+      <div class="details">1934–1992<br>Poet, Essayist, Activist</div>
+    </div>
+    <div class="desc">
+      <div class="title"><em>Each Time You Love</em></div>
+      <p>
+        Audre Lorde described herself as “Black, lesbian, mother, warrior, poet.”  
+        She saw identity as a source of power — and difference as a bridge to connection.
+      </p>
+      <p>
+        In essays like <em>The Uses of the Erotic</em> and <em>The Master’s Tools Will Never Dismantle the Master’s House</em>,  
+        Lorde redefined the erotic as a force of joy, creativity, and resistance.  
+        For her, speaking truth — even when painful — was an act of radical self-love.
+      </p>
+     <p>
+    “Each time you love, love as deeply as if it were forever,” she wrote.  
+    In that act of loving, Lorde found both defiance and renewal —  
+    proof that tenderness can be a form of survival,  
+    and that love, practiced honestly, is a form of revolution.
+  </p>
+    </div>
+  </section>
+
+</div>
+</body>

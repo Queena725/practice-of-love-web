@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
+
+/* ===== 전체 페이지 기본 스타일 ===== */
+body {
+  margin: 0;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  background: #f8f6f4;
+  color: #111;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+}
+
+/* 두 쪽으로 나누기 */
+.page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+
+/* ===== 왼쪽 페이지 ===== */
+.left-page {
+  background: #f8f6f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 60px 40px;
+  position: relative;
+}
+
+/* ===== 오른쪽 페이지 ===== */
+.right-page {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;   /* ✅ 제목과 본문을 위로 모으기 */
+  align-items: center;
+  text-align: center;
+  padding: 60px 80px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* 내부 콘텐츠 감싸는 래퍼 */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 40px;
+}
+
+/* ===== 상단 이름 ===== */
+.nav-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.nav-top.right {
+  position: absolute;
+  top: 40px;
+  right: 60px;
+}
+
+.nav-top.left {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.symbol {
+  font-size: 12px;
+  opacity: 0.7;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.name {
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  line-height: 1;
+}
+
+/* ===== 프로필 사진 ===== */
+.portrait {
+  width: 58%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 25px;
+}
+
+/* ===== 연락처 ===== */
+.contact {
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.contact a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 300;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+  color: #555;
+}
+
+/* ===== PROLOGUE 타이틀 (위아래 딱 붙게) ===== */
+.right-page h1:first-of-type {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 40px;
+  margin-bottom: 15px;        /* ✅ PROLOGUE 바로 아래로 딱 붙음 */
+  line-height: 1;
+}
+
+.right-page h1:first-of-type + h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #555;
+  line-height: 1.1;          /* ✅ 간격 촘촘하게 */
+  margin-top: 0;
+  transform: translateY(-2px);  /* 더 가깝게 하고 싶으면 -3~-4px */
+}
+
+/* ===== Bio (Education과 완전히 동일 정렬로 수정) ===== */
+.bio {
+  font-size: 13px;            /* ✅ Education과 동일한 크기 */
+  line-height: 1.55;          /* ✅ 동일한 간격 */
+  font-weight: 300;
+  width: 540px;               /* ✅ Education 섹션과 폭 통일 */
+  max-width: 540px;
+  text-align: left;
+  margin: 20px auto 0;        /* ✅ 위아래 여백 균일화 */
+  text-indent: 0;
+  color: #111;
+}
+
+/* ===== Section 통일 ===== */
+.section {
+  width: 540px;
+  max-width: 540px;
+  margin: 40px auto 0;
+  text-align: left;
+}
+
+/* 섹션 제목 */
+.section h2 {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #666;
+  margin-bottom: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* 섹션 본문 (BIO와 폭·라인 간격 통일) */
+.section p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #111;
+  text-indent: 0;
+  margin-top: 0;
+  margin-bottom: 14px;        /* ✅ Education과 같은 여백 */
+  word-break: keep-all;
+}
+
+/* 보조 정보 (위치/기간) */
+.section p .location,
+.section p .course {
+  display: block;
+  color: #555;
+  font-size: 12.5px;
+  margin-top: 2px;
+}
+
+
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+  margin-top: auto;
+  margin-bottom: 25px;
+}

@@ -1,0 +1,240 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  font-family: "adobe-garamond-pro", serif;
+  color: #111;
+   align-content: start;  
+  line-height: 1.7;
+}
+
+
+.author {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  position: relative;
+}
+
+
+.author img {
+  width: 100%;
+  height: 320px;           /* 세 명 모두 같은 높이 */
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 20px;     /* 아래 간격 일정하게 */
+}
+
+
+.meta {
+  min-height: 70px;        /* 이름·연도 등 높이 통일 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* 아래 기준으로 정렬 (깔끔하게) */
+  margin-bottom: 10px;
+}
+
+
+.desc {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ✅ 모두 위 기준으로 시작 */
+  line-height: 1.7;
+  font-size: 14px;
+  max-width: 85%;
+}
+
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 80px;
+  padding: 6% 8%;
+  min-height: 90vh;
+  justify-items: center;
+  align-items: start;     /* ✅ 각 아이템을 위쪽 정렬 */
+  align-content: start;   /* ✅ 전체 그리드도 위쪽 정렬 */
+  position: relative;
+  z-index: 1;
+}
+
+
+#imgOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#imgOverlay img {
+  max-width: 80%;
+  max-height: 80%;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+#imgOverlay.show {
+  display: flex;
+}
+
+
+.meta {
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.name {
+  font-family: "adobe-garamond-pro", serif;
+  font-size: 24px;
+  margin-bottom: 4px;
+   display: flex;
+
+  gap: 140px;           /* 이름 간격 */
+  margin-top: 60px;
+  font-size: 18px;      /* 작게 */
+  font-weight: 300; 
+}
+
+
+
+
+/* hover 효과 */
+.name span {
+  cursor: pointer;
+  transition: opacity 0.3s, letter-spacing 0.3s, transform 0.3s;
+}
+
+.name span:hover {
+  opacity: 0.6;
+  letter-spacing: 1.5px;
+  transform: translateY(-2px);
+}
+
+
+
+.details {
+  font-size: 13px;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+
+.title {
+  font-style: italic;
+  margin-bottom: 10px;
+  font-size: 15px;
+  opacity: 0.8;
+}
+
+p {
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+@media (max-width: 700px) {
+  .author {
+    grid-template-columns: 1fr;
+  }
+  .portrait {
+    margin-bottom: 20px;
+  }
+}
+
+
+
+/* === Practice / of / Love 위치 고정 === */
+.side-left {
+  position: fixed;
+  left: 20px;
+  top: 42.9%;
+  transform: rotate(-90deg) translate(-50%, 0);
+  transform-origin: left center;
+  z-index: 1000;
+}
+
+.side-right {
+  position: fixed;
+  right: 20px;
+  top: 44.4%;
+  transform: rotate(90deg) translate(50%, 0);
+  transform-origin: right center;
+  z-index: 1000;
+}
+
+.bottom-center {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+/* 🩵 폰트 통일 */
+.side-left,
+.side-right,
+.bottom-center {
+  font-family: "altesse-std-24pt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24pt;
+  margin: 18px;
+  color: #000;
+    pointer-events: none;
+  
+  
+}
+
+
+.corner-video {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 300px;
+  height: auto;
+  opacity: 1;
+   z-index: -1;
+  z-index: 0;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  object-fit: cover;
+  pointer-events: none;
+  filter: none !important;
+  box-shadow: none !important;
+  clip-path: inset(2px); 
+
+
+  animation: slowDrift 12s ease-in-out infinite alternate;
+}
+
+
+@keyframes slowDrift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-20px, 0) scale(1.02); /
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+
+
+.corner-video {
+  clip-path: inset(3px 3px 3px 3px); 
+}

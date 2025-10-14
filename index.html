@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="love.css" />
+  <link rel="stylesheet" href="https://use.typekit.net/rpg1trs.css" />
+ <audio id="heartbeat" src="../images/heartbeat-sound.mp3"></audio>
+</head>
+<body>
+  <!-- nav -->
+  <div class="top-left"><a href="authors.html">content</a></div>
+  <div class="top-right"><a href="info.html" target="_blank">Info</a></div>
+
+  <!-- Practice / of / Love : 화면 모서리 배치 + 그룹 회전 -->
+  <div class="title-group" id="titleGroup">
+    <div class="word side-left">Practice</div>
+    <div class="word side-right">Love</div>
+    <div class="word bottom-center">of</div>
+  </div>
+
+  <!-- 원/점/오버레이 -->
+  <div class="center" id="center"></div>
+  <img id="overlayImage" alt="overlay" />
+  <div class="dots" id="dots"></div>
+  <canvas id="rings"></canvas>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
+
+<div class="center-dot"></div>
+<style>
+
+    
+    
+  :root { --dot-size: 10px; }
+
+  html,body{height:100%; margin:0; font-family: "adobe-garamond-pro", serif;}
+  body {
+    display:flex; align-items:center; justify-content:center;
+    background:#fff; overflow:hidden; position:relative;
+  }
+
+  .top-left{position:absolute; top:20px; left:20px;}
+  .top-right{position:absolute; top:20px; right:20px;}
+  .side-left{position:absolute; left:20px; top:50%; transform:rotate(-90deg) translate(-50%,0); transform-origin:left center;}
+  .side-right{position:absolute; right:20px; top:50%; transform:rotate(90deg) translate(50%,0); transform-origin:right center;}
+  .bottom-center{position:absolute; bottom:20px; left:50%; transform:translateX(-50%);}
+
+
+  .center {
+    position:absolute;
+    top:50%; left:50%;
+    width:80px; height:80px; /* 원래 120px → 줄임 */
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:black;
+    z-index:2;
+    pointer-events:none;
+  }
+
+  /* 오버레이 이미지 */
+  #overlayImage{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%) scale(.98);
+    width:250px; height:250px; /* 중앙 원(80px)의 2배 */
+    object-fit:cover;
+
+    z-index:5;
+    opacity:0;
+    transition:opacity .18s ease, transform .18s ease;
+    pointer-events:none;
+  }
+  #overlayImage.visible{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+  }
+
+  /* 점들 */
+  .dots {
+    position:absolute;
+    top:50%; left:50%;
+    width:100%; height:100%;
+    transform:translate(-50%,-50%);
+    z-index:3;
+    pointer-events:none;
+  }
+  .dot {
+    position:absolute;
+    width:var(--dot-size); height:var(--dot-size);
+    background:black;
+    border-radius:50%;
+    cursor:pointer;
+    pointer-events:auto;
+    transition:transform .12s ease, opacity .18s ease;
+    z-index:3;
+    
+  }
+  .dot:hover { transform:scale(1.25); }
+
+  .dimmed { opacity:0.18 !important; }
+
+  /* 캔버스 */
+  canvas#rings {
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    z-index:1;
+    pointer-events:none;
+    transition:opacity .18s ease;
+  }
+  canvas#rings.dimmed { opacity:0.18; }
+
+  @media (max-width:600px){
+    .center{ width:60px; height:60px; }
+    #overlayImage{ width:120px; height:120px; }
+    :root { --dot-size:9px; }
+  }
+</style>
+</head> 
+</div>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "adobe-garamond-pro", serif;
+    background: #fff;
+  }
+
+  /* Fixed Navigation Bar */
+  .navbar {
+    overflow: hidden;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; /* 다른 요소 위에 보이도록 */
+  }
+
+  .navbar a {
+    float: left;
+    display: block;
+    color: #000000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .navbar a:hover {
+    background: transparent;
+    color: black;
+  }
+
+  /* 메인 콘텐츠 위쪽에 여백 */
+  .main {
+    padding: 16px;
+    margin-top: 60px; /* navbar 높이만큼 */
+  }
+</style>
+</head>
+
+ 
+
+
+<script>
+  const canvas = document.getElementById('rings');
+  const dotsContainer = document.getElementById('dots');
+  const overlay = document.getElementById('overlayImage');
+
+  
+
+  function sizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  sizeCanvas();
+  window.addEventListener('resize', () => {
+    sizeCanvas();
+    drawRings();
+  });
+
+  const ctx = canvas.getContext('2d');
+
+  // --- 동심원 ---
+  function drawRings(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const cx = canvas.width/2, cy = canvas.height/2;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(0,0,0,0.18)";
+    const centerRadius = 40; // 중앙 원 반지름 (80px / 2)
+    const maxR = outerR - 15; // 점 바깥으로 안 나가게
+    for(let r = centerRadius + 15; r < maxR; r += 8){
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI*2);
+      ctx.stroke();
+    }
+  }
+
+
+  const COUNT = 22; 
+  const outerR = Math.min(window.innerWidth, window.innerHeight) * 0.30;
+
+  const createdDots = [];
+  for (let i = 0; i < COUNT; i++){
+    const angle = (i / COUNT) * (Math.PI * 2);
+    const x = outerR * Math.cos(angle);
+    const y = outerR * Math.sin(angle);
+
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    const half = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--dot-size'))/2 || 6;
+    dot.style.left = `calc(50% + ${x}px - ${half}px)`;
+    dot.style.top  = `calc(50% + ${y}px - ${half}px)`;
+
+    dot.addEventListener('mouseenter', () => {
+      const randIdx = Math.floor(Math.random() * images.length);
+      overlay.src = images[randIdx];
+      overlay.classList.add('visible');
+      createdDots.forEach(d => { if (d !== dot) d.classList.add('dimmed'); });
+      canvas.classList.add('dimmed');
+    });
+
+    dot.addEventListener('mouseleave', () => {
+      overlay.classList.remove('visible');
+      createdDots.forEach(d => d.classList.remove('dimmed'));
+      canvas.classList.remove('dimmed');
+    });
+
+    dotsContainer.appendChild(dot);
+    createdDots.push(dot);
+  }
+
+  drawRings();
+
+
+
+  // heartbeat audio 객체 가져오기
+const heartbeat = document.getElementById('heartbeat');
+
+// 클릭 가능한 요소 선택 (버튼, 점 등)
+const clickableItems = document.querySelectorAll('#gallery img, button, .dot'); 
+
+clickableItems.forEach(item => {
+  item.addEventListener('click', () => {
+    heartbeat.currentTime = 0; // 처음부터 재생
+    heartbeat.volume = 0.4;    // 살짝 작게
+    heartbeat.play();
+
+    // 2초 후 자동 정지
+    setTimeout(() => {
+      heartbeat.pause();
+      heartbeat.currentTime = 0;
+    }, 2000);
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Queena Lee — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    background: #fff;
+    color: #111;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  /* ===== HUD ===== */
+  .hud {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    z-index: 1000;
+  }
+
+  .hud div {
+    cursor: pointer;
+  }
+
+  .hud div:hover {
+    color: #777;
+  }
+
+  /* Side words */
+  .sideword {
+    position: fixed;
+    top: 50%;
+    font-family: 'Inter', sans-serif; /* ✅ 통일 */
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transform: rotate(-90deg);
+    color: #111;
+    opacity: 0.7;
+  }
+
+  .sideword.left {
+    left: 30px;
+  }
+
+  .sideword.right {
+    right: 30px;
+    transform: rotate(90deg);
+  }
+
+  /* ===== Stage ===== */
+  .stage {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  /* 중앙 큰 원 */
+  .disc {
+    position: relative;
+    width: min(68vmin, 640px);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+  }
+
+  .disc::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #111;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: none;
+  }
+
+  /* 점 */
+  .pin {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #111;
+    border-radius: 50%;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+
+  .pin:hover {
+    transform: scale(1.5);
+  }
+
+  /* Hover 시 프리뷰 이미지 */
+  .preview {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.97);
+    width: 420px;
+    height: 280px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  .preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pin.active .preview {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* 다른 점 흐리게 */
+  .faded {
+    opacity: 0.2;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<div class="hud">
+  <div>QL</div>
+  <div id="info-link">Info</div>
+</div>
+
+<div class="sideword left">QUEENA</div>
+<div class="sideword right">LEE</div>
+
+<!-- Main -->
+<main class="stage">
+  <div class="disc" id="disc"></div>
+</main>
+
+<script>
+/* ✅ 작품 데이터 */
+const projects = [
+  { title: "Practice of Love", img: "images/sunflower.png", url: "file:///Users/iyebin/Desktop/practive%20of%20love%20web/index.html" },
+  { title: "Forest", img: "images/forest.jpg", url: ".https://queena725.github.io/core2lab.github.io/" },
+  { title: "Flower Gifting Guide", img: "images/flower.jpg", url: "#" },
+  { title: "Think Before Printing", img: "images/printing.jpg", url: "#" },
+  { title: "Human Design", img: "images/human.jpg", url: "#" },
+  { title: "Mantra Merch", img: "images/mantra.jpg", url: "#" },
+  { title: "Love in the City", img: "images/love-city.jpg", url: "#" },
+  { title: "Waste & Justice", img: "images/waste.jpg", url: "#" },
+];
+
+/* ✅ 점들 자동 생성 */
+const disc = document.getElementById("disc");
+const center = disc.offsetWidth / 2;
+const radius = center * 0.85;
+const totalDots = 28; // 🔸점 개수 더 많게
+
+for (let i = 0; i < totalDots; i++) {
+  const pin = document.createElement("div");
+  pin.className = "pin";
+  
+  const angle = (i / totalDots) * Math.PI * 2 - Math.PI / 2;
+  const x = center + radius * Math.cos(angle);
+  const y = center + radius * Math.sin(angle);
+  
+  pin.style.left = `${x - 5}px`;
+  pin.style.top = `${y - 5}px`;
+
+  // 작품과 매칭 (없으면 placeholder)
+  const p = projects[i % projects.length];
+  const preview = document.createElement("div");
+  preview.className = "preview";
+  preview.innerHTML = `<img src="${p.img}" alt="${p.title}">`;
+  pin.appendChild(preview);
+
+  pin.addEventListener("mouseenter", () => {
+    document.querySelectorAll(".pin").forEach(dot => {
+      if (dot !== pin) dot.classList.add("faded");
+    });
+    pin.classList.add("active");
+  });
+
+  pin.addEventListener("mouseleave", () => {
+    document.querySelectorAll(".pin").forEach(dot => dot.classList.remove("faded"));
+    pin.classList.remove("active");
+  });
+
+  pin.addEventListener("click", () => {
+    window.location.href = p.url;
+  });
+
+  disc.appendChild(pin);
+}
+
+/* Info → about.html */
+document.getElementById("info-link").addEventListener("click", () => {
+  window.location.href = "about.html";
+});
+</script>
+
+</body>
+</html>
