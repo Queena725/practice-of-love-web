@@ -92,22 +92,41 @@ html, body {
 .dots{
   position:absolute; top:50%; left:50%;
   width:100%; height:100%; transform:translate(-50%,-50%);
-  z-index:3; pointer-events:none;
+  z-index:3; /* pointer-events: none;  <- 이 줄은 절대 넣지 마! */
 }
 .dot{
   position:absolute; width:var(--dot-size); height:var(--dot-size);
-  background:#000; border-radius:50%; pointer-events:auto;
-  transition: transform .12s ease, opacity .18s ease;
+  background:#000; border-radius:50%;
+  pointer-events:auto; cursor:pointer;
+
+  transition: opacity 0.3s ease, transform 0.12s ease;
 }
+
 .dot:hover{ transform:scale(1.25); }
 .dimmed{ opacity:.18 !important; }
 
 canvas#rings{
   position:absolute; top:50%; left:50%;
-  transform:translate(-50%,-50%); z-index:1; pointer-events:none;
+  transform:translate(-50%,-50%); z-index:1; 
 }
 canvas#rings.dimmed{ opacity:.18; }
 
+
+/* hover했을 때 배경 흐려지게 */
+body.blur-active #center,
+body.blur-active canvas#rings,
+body.blur-active #titleGroup,
+body.blur-active #dots .dot {
+  filter: blur(1px);
+  transition: filter 0.4s ease;
+}
+
+/* 이미지는 흐려지지 않게 */
+#overlayImage,
+#hoverText {
+  filter: none !important;
+  z-index: 30;  /* 최상단 */
+}
 /* hover 텍스트(원하면 사용) */
 #hoverText{
   position: fixed; right:80px; bottom:80px; width:280px;

@@ -2,13 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="love.css" />
   <link rel="stylesheet" href="https://use.typekit.net/rpg1trs.css" />
- <audio id="heartbeat" src="../images/heartbeat-sound.mp3"></audio>
 </head>
+
 <body>
+  <!-- 나머지 콘텐츠들 -->
+  <audio id="heartbeat" src="images/heartbeat-sound.mp3"></audio>
+
+    <script src="script.js" defer></script>
+    </body>
+    
+    <body>
   <!-- nav -->
   <div class="top-left"><a href="authors.html">content</a></div>
   <div class="top-right"><a href="info.html" target="_blank">Info</a></div>
@@ -20,13 +26,11 @@
     <div class="word bottom-center">of</div>
   </div>
 
-  <!-- 원/점/오버레이 -->
-  <div class="center" id="center"></div>
-  <img id="overlayImage" alt="overlay" />
-  <div class="dots" id="dots"></div>
-  <canvas id="rings"></canvas>
 
-  <script src="script.js" defer></script>
+<canvas id="rings"></canvas>
+<div class="center" id="center"></div>
+<div class="dots" id="dots"></div>
+<img id="overlayImage" alt="overlay" />
 </body>
 </html>
 
@@ -79,26 +83,28 @@
     transform:translate(-50%,-50%) scale(1);
   }
 
-  /* 점들 */
-  .dots {
-    position:absolute;
-    top:50%; left:50%;
-    width:100%; height:100%;
-    transform:translate(-50%,-50%);
-    z-index:3;
-    pointer-events:none;
-  }
-  .dot {
-    position:absolute;
-    width:var(--dot-size); height:var(--dot-size);
-    background:black;
-    border-radius:50%;
-    cursor:pointer;
-    pointer-events:auto;
-    transition:transform .12s ease, opacity .18s ease;
-    z-index:3;
-    
-  }
+/* 점들 전체 컨테이너 */
+.dots {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 100%; height: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  /* pointer-events: none;  ❌ 이 줄을 지워줘 */
+}
+
+/* 각 점 */
+.dot {
+  position: absolute;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  background: black;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto; /* ✅ 점만 반응 가능하게 */
+  transition: transform 0.12s ease, opacity 0.18s ease;
+  z-index: 4; /* 살짝 더 앞으로 오게 */
+}
   .dot:hover { transform:scale(1.25); }
 
   .dimmed { opacity:0.18 !important; }
@@ -164,100 +170,6 @@
 </style>
 </head>
 
- 
 
-
-<script>
-  const canvas = document.getElementById('rings');
-  const dotsContainer = document.getElementById('dots');
-  const overlay = document.getElementById('overlayImage');
-
-  
-
-  function sizeCanvas(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  sizeCanvas();
-  window.addEventListener('resize', () => {
-    sizeCanvas();
-    drawRings();
-  });
-
-  const ctx = canvas.getContext('2d');
-
-  // --- 동심원 ---
-  function drawRings(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    const cx = canvas.width/2, cy = canvas.height/2;
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "rgba(0,0,0,0.18)";
-    const centerRadius = 40; // 중앙 원 반지름 (80px / 2)
-    const maxR = outerR - 15; // 점 바깥으로 안 나가게
-    for(let r = centerRadius + 15; r < maxR; r += 8){
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI*2);
-      ctx.stroke();
-    }
-  }
-
-
-  const COUNT = 22; 
-  const outerR = Math.min(window.innerWidth, window.innerHeight) * 0.30;
-
-  const createdDots = [];
-  for (let i = 0; i < COUNT; i++){
-    const angle = (i / COUNT) * (Math.PI * 2);
-    const x = outerR * Math.cos(angle);
-    const y = outerR * Math.sin(angle);
-
-    const dot = document.createElement('div');
-    dot.className = 'dot';
-    const half = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--dot-size'))/2 || 6;
-    dot.style.left = `calc(50% + ${x}px - ${half}px)`;
-    dot.style.top  = `calc(50% + ${y}px - ${half}px)`;
-
-    dot.addEventListener('mouseenter', () => {
-      const randIdx = Math.floor(Math.random() * images.length);
-      overlay.src = images[randIdx];
-      overlay.classList.add('visible');
-      createdDots.forEach(d => { if (d !== dot) d.classList.add('dimmed'); });
-      canvas.classList.add('dimmed');
-    });
-
-    dot.addEventListener('mouseleave', () => {
-      overlay.classList.remove('visible');
-      createdDots.forEach(d => d.classList.remove('dimmed'));
-      canvas.classList.remove('dimmed');
-    });
-
-    dotsContainer.appendChild(dot);
-    createdDots.push(dot);
-  }
-
-  drawRings();
-
-
-
-  // heartbeat audio 객체 가져오기
-const heartbeat = document.getElementById('heartbeat');
-
-// 클릭 가능한 요소 선택 (버튼, 점 등)
-const clickableItems = document.querySelectorAll('#gallery img, button, .dot'); 
-
-clickableItems.forEach(item => {
-  item.addEventListener('click', () => {
-    heartbeat.currentTime = 0; // 처음부터 재생
-    heartbeat.volume = 0.4;    // 살짝 작게
-    heartbeat.play();
-
-    // 2초 후 자동 정지
-    setTimeout(() => {
-      heartbeat.pause();
-      heartbeat.currentTime = 0;
-    }, 2000);
-  });
-});
-</script>
 </body>
 </html>

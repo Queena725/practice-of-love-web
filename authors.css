@@ -238,3 +238,41 @@ p {
 .corner-video {
   clip-path: inset(3px 3px 3px 3px); 
 }
+
+
+.view-pdf {
+  position: relative;
+  bottom: 40px;
+  margin-left: 125px; /* 🔹 첫 번째 column과 딱 맞춤 */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "adobe-garamond-pro", serif;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.view-pdf .arrow {
+  font-size: 18px;
+  opacity: 0.7;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.view-pdf:hover .arrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+.view-pdf a {
+  text-decoration: none;
+  color: #000;
+  transition: opacity 0.3s ease;
+}
+
+.view-pdf a:hover {
+  opacity: 0.6;
+}
+
+

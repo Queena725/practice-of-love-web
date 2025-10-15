@@ -119,15 +119,22 @@ window.addEventListener("DOMContentLoaded", () => {
       img.style.zIndex = 1;
     });
 
-    // ✅ click 시 앞뒤 전환
-    img.addEventListener("click", () => {
-      const alt = img.getAttribute("data-alt");
-      if (!alt) return;
-      const current = img.src;
-      img.src = alt;
-      img.setAttribute("data-alt", current);
-    });
+// ✅ click 시 앞뒤 전환 + 4초 뒤 복귀
+img.addEventListener("click", () => {
+  const alt = img.getAttribute("data-alt");
+  if (!alt) return;
+  
+  const current = img.src;
+  img.src = alt;
+  img.setAttribute("data-alt", current);
 
+  // 🔹 4초 뒤 원래 이미지로 자동 복귀
+  setTimeout(() => {
+    const resetAlt = img.getAttribute("data-alt");
+    img.src = resetAlt;
+    img.setAttribute("data-alt", alt);
+  }, 4000);
+});
     // ✅ double-click 확대 보기
     img.addEventListener("dblclick", (e) => {
       e.stopPropagation();

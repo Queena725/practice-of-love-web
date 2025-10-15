@@ -142,7 +142,8 @@
     In this way, she invites us to make love a daily practice of freedom.
   </p>
 
-    </div>
+      <div class="read-link" data-page="4">→ Read</div>
+</div>
   </section>
 
   <!-- Erich Fromm -->
@@ -177,8 +178,10 @@
     transforming not only our relationships but the very way we exist with others.  
     Love, in this sense, is a lifelong art — one that must be practiced every day.
   </p>
-      
-    </div>
+
+     <div class="read-link" data-page="10">→ Read</div>
+</div>
+
   </section>
 
   <!-- Audre Lorde -->
@@ -205,8 +208,318 @@
     proof that tenderness can be a form of survival,  
     and that love, practiced honestly, is a form of revolution.
   </p>
-    </div>
+
+    <div class="read-link" data-page="14">→ Read</div>
+</div>
+
   </section>
 
 </div>
 </body>
+
+
+
+
+
+
+<div class="view-pdf">
+  <span class="arrow"></span>
+  <a href="#" id="viewPdfLink"> </a>
+</div>
+
+
+<div id="pdfModal">
+  <div class="pdf-content">
+    <span id="closeBtn">&times;</span>
+
+
+    <div class="nav-arrow left" id="prevBtn">←</div>
+    <div class="nav-arrow right" id="nextBtn">→</div>
+
+    <div class="spread-gallery" id="spreadGallery">
+
+
+      <div class="spread-pair active">
+        <img src="Book spread2.jpg" alt="Left page 2">
+        <img src="Book spread3.jpg" alt="Right page 2">
+      </div>
+
+      <div class="spread-pair">
+        <img src="Book spread4.jpg" alt="Left page 3">
+        <img src="Book spread5.jpg" alt="Right page 3">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread6.jpg" alt="Left page 4">
+        <img src="Book spread7.jpg" alt="Right page 4">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread8.jpg" alt="Left page 5">
+        <img src="Book spread9.jpg" alt="Right page 5">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread10.jpg" alt="Left page 6">
+        <img src="Book spread11.jpg" alt="Right page 6">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread12.jpg" alt="Left page 7">
+        <img src="Book spread13.jpg" alt="Right page 7">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread14.jpg" alt="Left page 8">
+        <img src="Book spread15.jpg" alt="Right page 8">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread16.jpg" alt="Left page 9">
+        <img src="Book spread17.jpg" alt="Right page 9">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread18.jpg" alt="Left page 10">
+        <img src="Book spread19.jpg" alt="Right page 10">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread20.jpg" alt="Left page 11">
+        <img src="Book spread21.jpg" alt="Right page 11">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread22.jpg" alt="Left page 12">
+        <img src="Book spread23.jpg" alt="Right page 12">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread24.jpg" alt="Left page 13">
+        <img src="Book spread25.jpg" alt="Right page 13">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread26.jpg" alt="Left page 14">
+        <img src="Book spread27.jpg" alt="Right page 14">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread28.jpg" alt="Left page 15">
+        <img src="Book spread29.jpg" alt="Right page 15">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread30.jpg" alt="Left page 16">
+        <img src="Book spread31.jpg" alt="Right page 16">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread32.jpg" alt="Left page 17">
+        <img src="Book spread33.jpg" alt="Right page 17">
+      </div>
+
+        <div class="spread-pair">
+        <img src="Book spread34.jpg" alt="Left page 18">
+        <img src="Book spread35.jpg" alt="Right page 18">
+      </div>
+
+      
+       
+
+
+
+      
+    </div>
+  </div>
+</div>
+
+<style>
+/* 🔸 View PDF link */
+.view-pdf {
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "adobe-garamond-pro", serif;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+}
+.view-pdf .arrow {
+  font-size: 18px;
+  opacity: 0.7;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.view-pdf:hover .arrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+.view-pdf a {
+  text-decoration: none;
+  color: #000;
+  transition: opacity 0.3s ease;
+}
+.view-pdf a:hover { opacity: 0.6; }
+
+/* 🪞 Modal viewer */
+#pdfModal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.98);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.pdf-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  overflow: hidden;
+}
+
+/* spreads layout */
+.spread-gallery {
+  position: relative;
+  width: 100%;
+  height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spread-pair {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0; /* 중앙 틈 없음 */
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.spread-pair.active {
+  opacity: 1;
+  position: relative;
+}
+
+/* 🔹 spread 이미지 더 크게 확대 */
+.spread-pair img {
+  width: 54%; /* 🔸 기존보다 더 큼 */
+  aspect-ratio: 4.5 / 9;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: none;
+}
+
+/* Cover 단일 페이지 */
+.spread-pair:first-child img {
+  width: 62%;
+}
+
+/* Navigation arrows */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;       /* 🔸 살짝 작게 */
+  font-weight: 200;      /* 얇게 */
+  color: #ffffff;
+  background: transparent; /* 🔸 원형 프레임 제거 */
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  user-select: none;
+  z-index: 50;
+}
+
+.nav-arrow:hover {
+  opacity: 0.5;
+}
+
+.nav-arrow.left { left: 25px; }
+.nav-arrow.right { right: 25px; }
+
+/* Close button (×) */
+#closeBtn {
+  position: absolute;
+  top: 25px;
+  right: 35px;
+  font-size: 28px;
+  font-weight: 200;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+#closeBtn:hover { opacity: 1; }
+
+/* Info 숨기기 */
+#pdfModal ~ .top-right {
+  display: none !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 700px) {
+  .spread-pair {
+    flex-direction: column;
+  }
+  .spread-pair img {
+    width: 90%;
+  }
+}
+</style>
+
+<script>
+const pdfModal = document.getElementById("pdfModal");
+const viewLink = document.getElementById("viewPdfLink");
+const closeBtn = document.getElementById("closeBtn");
+const spreads = document.querySelectorAll(".spread-pair");
+const infoButton = document.querySelector(".top-right");
+let currentIndex = 0;
+
+viewLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  pdfModal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+  if (infoButton) infoButton.style.display = "none"; // 🔹 Info 숨기기
+});
+
+closeBtn.addEventListener("click", () => {
+  pdfModal.style.display = "none";
+  document.body.style.overflow = "auto";
+  if (infoButton) infoButton.style.display = "block"; // 🔹 Info 복귀
+});
+
+pdfModal.addEventListener("click", (e) => {
+  if (e.target === pdfModal) {
+    pdfModal.style.display = "none";
+    document.body.style.overflow = "auto";
+    if (infoButton) infoButton.style.display = "block";
+  }
+});
+
+/* 🔹 Arrow Navigation */
+document.getElementById("prevBtn").addEventListener("click", () => {
+  spreads[currentIndex].classList.remove("active");
+  currentIndex = (currentIndex - 1 + spreads.length) % spreads.length;
+  spreads[currentIndex].classList.add("active");
+});
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  spreads[currentIndex].classList.remove("active");
+  currentIndex = (currentIndex + 1) % spreads.length;
+  spreads[currentIndex].classList.add("active");
+});
+</script>
