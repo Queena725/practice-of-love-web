@@ -6,28 +6,21 @@ html, body {
   font-family: "adobe-garamond-pro", serif;
   background: #fff;
 }
+
 /* nav */
 .top-left, .top-right {
   position: fixed;
   z-index: 1000;
-  display: inline-block; /* block → inline-block 으로 바꾸기 */
+  display: inline-block;
 }
-
-/* “content”를 Info 옆으로 */
 .top-left {
-  top: 25px !important;
-  right: 120px !important; /* Info보다 왼쪽으로 약간 이동 */
-  left: auto !important;
-  bottom: auto !important;
+  top: 25px;
+  right: 120px;
 }
-
-/* “Info” 그대로 */
 .top-right {
-  right: 40px !important;
-  top: 25px !important;
+  right: 40px;
+  top: 25px;
 }
-
-/* link look */
 .top-left a, .top-right a {
   color: #000;
   text-decoration: none;
@@ -36,178 +29,114 @@ html, body {
 }
 .top-left a:hover, .top-right a:hover { opacity: .6; }
 
-
-
-/* ===== Title (P/o/L) ===== */
-.title-group{
+/* Title */
+.title-group {
   position: fixed;
   inset: 0;
   transform: rotate(0deg);
   transform-origin: 50% 50%;
   transition: transform .7s ease-in-out;
   z-index: 20;
-  pointer-events: none;   
+  pointer-events: none;
 }
-.title-group .word{
+.title-group .word {
   position: absolute;
   font-family: "altesse-std-24pt", sans-serif;
   font-weight: 400;
-  font-style: normal;
   font-size: 24pt;
-  color:#000;
-  pointer-events: auto;   /* 단어는 클릭 가능 */
+  color: #000;
+  pointer-events: auto;
   cursor: pointer;
 }
-/* 모서리 배치(벽쪽) */
-.title-group .side-left{
-  left: 20px; top: 50%;
+.side-left {
+  left: 50px; top: 50%;
   transform: translateY(-50%) rotate(-90deg);
   transform-origin: left center;
 }
-.title-group .side-right{
-  right: 20px; top: 50%;
+.side-right {
+  right: 50px; top: 50%;
   transform: translateY(-50%) rotate(90deg);
   transform-origin: right center;
 }
-.title-group .bottom-center{
-  left: 50%; bottom: 20px;
+.bottom-center {
+  left: 50%; bottom: 50px;
   transform: translateX(-50%);
 }
 
-/* ===== Rings/Dots/Overlay ===== */
-.center{
-  position:absolute; top:50%; left:50%;
-  width:80px; height:80px; transform:translate(-50%,-50%);
-  border-radius:50%; background:#000; z-index:2;
+/* Dots, Rings, Overlay */
+.center {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 80px; height: 80px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: black;
+  z-index: 2;
 }
-#overlayImage{
-  position:absolute; top:50%; left:50%;
-  transform:translate(-50%,-50%) scale(.98);
-  width:250px; height:250px; object-fit:cover;
-  z-index:5; opacity:0; pointer-events:none;
-  transition:opacity .18s ease, transform .18s ease;
-}
-#overlayImage.visible{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-
-.dots{
-  position:absolute; top:50%; left:50%;
-  width:100%; height:100%; transform:translate(-50%,-50%);
-  z-index:3; /* pointer-events: none;  <- 이 줄은 절대 넣지 마! */
-}
-.dot{
-  position:absolute; width:var(--dot-size); height:var(--dot-size);
-  background:#000; border-radius:50%;
-  pointer-events:auto; cursor:pointer;
-
-  transition: opacity 0.3s ease, transform 0.12s ease;
-}
-
-.dot:hover{ transform:scale(1.25); }
-.dimmed{ opacity:.18 !important; }
-
-canvas#rings{
-  position:absolute; top:50%; left:50%;
-  transform:translate(-50%,-50%); z-index:1; 
-}
-canvas#rings.dimmed{ opacity:.18; }
-
-
-/* hover했을 때 배경 흐려지게 */
-body.blur-active #center,
-body.blur-active canvas#rings,
-body.blur-active #titleGroup,
-body.blur-active #dots .dot {
-  filter: blur(1px);
-  transition: filter 0.4s ease;
-}
-
-
-#overlayImage,
-#hoverText {
-  filter: none !important;
-  z-index: 30;  
-}
-
-#hoverText{
-  position: fixed; right:80px; bottom:80px; width:280px;
-  font-size:15px; line-height:1.6; color:#000; opacity:0;
-  transition:opacity .3s; z-index:30; text-align:left;
-}
-#hoverText.visible{ opacity:1; }
-
-
-
-
-/* 왼쪽 혹은 위쪽 노트 텍스트 */
-#hoverNote {
-  position: fixed;
-  top: 50px;
-  left: 50px;
-  bottom: auto;
-  text-align: left;           
-  font-family: "altesse-std-24pt", sans-serif;
-  font-size: 24px;       
-  color: rgba(0, 0, 0, 0.85);
-  line-height: 1.4;
+#overlayImage {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(.98);
+  width: 250px; height: 250px;
+  object-fit: cover;
+  z-index: 5;
   opacity: 0;
-  transition: opacity 0.4s ease;
-  white-space: pre-line;  
-  max-width: 350px;       
-  z-index: 20;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
 }
-
-
-
-#hoverNote.visible {
+#overlayImage.visible {
   opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-
-/* ===== 절대 지울 것 =====
-   아래와 같은 옛 규칙이 파일 어딘가에 남아 있으면 클릭이 절대 안 됩니다.
-   .side-left { position: fixed ... }
-   .side-right { position: fixed ... }
-   .bottom-center { position: fixed ... }
-   .side-left, .side-right, .bottom-center { pointer-events: none; }
-*/
-
-/* === Practice / of / Love 위치 고정 === */
-.side-left {
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: rotate(-90deg) translate(-50%, 0);
-  transform-origin: left center;
-  z-index: 1000;
-}
-
-.side-right {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: rotate(90deg) translate(50%, 0);
-  transform-origin: right center;
-  z-index: 1000;
-}
-
-.bottom-center {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-}
-
-
-.side-left,
-.side-right,
-.bottom-center {
-  font-family: "altesse-std-24pt", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 24pt;
-  margin: 18px;
-  color: #000;
+.dots {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 100%; height: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
   pointer-events: none;
 }
+.dot {
+  position: absolute;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  background: black;
+  border-radius: 50%;
+  pointer-events: auto;
+  transition: transform .12s ease, opacity .18s ease;
+}
+.dot:hover { transform: scale(1.25); }
+.dimmed { opacity: 0.18 !important; }
 
+canvas#rings {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+canvas#rings.dimmed { opacity: 0.18; }
+
+#hoverText {
+  position: fixed; right: 80px; bottom: 80px; width: 280px;
+  font-size: 15px; line-height: 1.6; color: #000; opacity: 0;
+  transition: opacity .3s; z-index: 30; text-align: left;
+}
+#hoverText.visible { opacity: 1; }
+
+#hoverNote {
+  position: fixed; top: 50px; left: 50px;
+  text-align: left; font-family: "altesse-std-24pt", sans-serif;
+  font-size: 24px; color: rgba(0, 0, 0, 0.85);
+  line-height: 1.4; opacity: 0;
+  transition: opacity 0.4s ease; white-space: pre-line;
+  max-width: 350px; z-index: 20;
+}
+#hoverNote.visible { opacity: 1; }
+
+
+.center {
+  transform: translate(-50%, -50%) scale(0.3);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
