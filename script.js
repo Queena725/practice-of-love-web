@@ -175,4 +175,5 @@
       rotation = (rotation + 180) % 360;
       titleGroup.style.transform = `rotate(${rotation}deg)`;
     });
-
+  });
+})();
