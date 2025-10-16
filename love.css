@@ -210,3 +210,14 @@ body.blur-active #dots .dot {
   color: #000;
   pointer-events: none;
 }
+
+
+
+#titleGroup {
+  animation: spin 12s linear infinite; /* 속도 조절 */
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
