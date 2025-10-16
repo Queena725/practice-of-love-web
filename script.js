@@ -5,6 +5,7 @@
   const overlay = document.getElementById("overlayImage");
   const heartbeat = document.getElementById("heartbeat");
   const titleGroup = document.getElementById("titleGroup");
+  const center = document.getElementById("center");
 
   const COUNT = 22;
   let imagePool = [];
@@ -46,7 +47,6 @@
     "images/card23.jpg","images/card25.jpg","images/card26.jpg","images/card29.jpg"
   ];
 
-  // ===== 이미지 미리 로드 =====
   function preloadImages(paths) {
     return Promise.all(paths.map(src => new Promise(resolve => {
       const img = new Image();
@@ -69,11 +69,11 @@
       return Math.min(window.innerWidth, window.innerHeight) * 0.30;
     }
 
-    function drawRings() {
+    function drawRings(alpha = 1) {
       const cx = canvas.width / 2, cy = canvas.height / 2;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(0,0,0,0.18)";
+      ctx.strokeStyle = `rgba(0,0,0,${0.18 * alpha})`;
       const centerRadius = 40, maxR = outerR() - 15;
       for (let r = centerRadius + 15; r < maxR; r += 8) {
         ctx.beginPath();
@@ -94,18 +94,21 @@
       });
     }
 
-    // 점 + 이벤트 생성
+    // 점 생성
     for (let i = 0; i < COUNT; i++) {
       const dot = document.createElement("div");
       dot.className = "dot";
+      dot.style.opacity = "0";
+      dot.style.background = "#bbb"; // 초기 회색
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
 
+      // hover 이벤트
       dot.addEventListener("mouseenter", () => {
         const pool = imagePool.length ? imagePool : IMAGE_CANDIDATES;
         const idx = i % pool.length;
-
         overlay.src = pool[idx];
         overlay.classList.add("visible");
-
         showHoverText(texts[i % texts.length], notes[i % notes.length]);
         dots.forEach(d => { if (d !== dot) d.classList.add("dimmed"); });
         canvas.classList.add("dimmed");
@@ -121,17 +124,61 @@
       dot.addEventListener("click", () => {
         heartbeat.currentTime = 0;
         heartbeat.volume = 0.4;
-        heartbeat.play().then(() => {
-          setTimeout(() => {
-            heartbeat.pause();
-            heartbeat.currentTime = 0;
-          }, 2000);
-        });
+        heartbeat.play();
+        setTimeout(() => {
+          heartbeat.pause();
+          heartbeat.currentTime = 0;
+        }, 2000);
+      });
+    }
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    drawRings(0);
+
+    // ===== INTRO ANIMATION =====
+    function startIntroAnimation() {
+      // Step 1: 중앙 점 커짐
+      center.style.transform = "translate(-50%, -50%) scale(0.3)";
+      center.style.transition = "transform 1.2s cubic-bezier(0.25, 1, 0.5, 1)";
+      requestAnimationFrame(() => {
+        center.style.transform = "translate(-50%, -50%) scale(1)";
       });
 
-      dotsContainer.appendChild(dot);
-      dots.push(dot);
+      // Step 2: 링 등장 (페이드인)
+      let progress = 0;
+      const ringAnim = setInterval(() => {
+        progress += 0.04;
+        drawRings(progress);
+        if (progress >= 1) clearInterval(ringAnim);
+      }, 50);
+
+      // Step 3: 점 등장 (회색 → 검정 깜빡임)
+      setTimeout(() => {
+        positionDots();
+        dots.forEach((dot, i) => {
+          setTimeout(() => {
+            dot.style.opacity = "1";
+            dot.style.transition = "opacity 0.4s ease";
+            // 마지막에 깜빡이며 검정색으로
+            setTimeout(() => {
+              dot.animate(
+                [
+                  { background: "#bbb" },
+                  { background: "#000" },
+                  { background: "#444" },
+                  { background: "#000" }
+                ],
+                { duration: 900, iterations: 1, easing: "ease-in-out" }
+              );
+              dot.style.background = "#000";
+            }, 400);
+          }, i * 70); // 점 하나씩 순차 등장
+        });
+      }, 1200);
     }
+
+    startIntroAnimation();
 
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
@@ -139,18 +186,12 @@
       drawRings();
       positionDots();
     });
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    drawRings();
-    positionDots();
   }
 
-  // ===== Hover 텍스트 표시 함수 =====
+  // Hover text
   const hoverText = document.createElement("div");
   hoverText.id = "hoverText";
   document.body.appendChild(hoverText);
-
   const hoverNote = document.createElement("div");
   hoverNote.id = "hoverNote";
   document.body.appendChild(hoverNote);
@@ -167,8 +208,7 @@
     hoverNote.classList.remove("visible");
   }
 
-  // ===== 제목 회전 =====
-
+  // Title rotation
   let rotation = 0;
   titleGroup.querySelectorAll(".word").forEach(w => {
     w.addEventListener("click", () => {
