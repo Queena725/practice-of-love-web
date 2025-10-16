@@ -198,7 +198,7 @@ body.blur-active #dots .dot {
   z-index: 1000;
 }
 
-/* 🩵 폰트 통일 */
+
 .side-left,
 .side-right,
 .bottom-center {
@@ -211,13 +211,3 @@ body.blur-active #dots .dot {
   pointer-events: none;
 }
 
-
-
-#titleGroup {
-  animation: spin 12s linear infinite; /* 속도 조절 */
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
