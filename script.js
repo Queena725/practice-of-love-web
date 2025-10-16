@@ -171,7 +171,7 @@
   let rotation = 0;
   titleGroup.querySelectorAll(".word").forEach(w => {
     w.addEventListener("click", () => {
-      rotation = (rotation + 90) % 360;
+      rotation = (rotation + 180) % 360;
       titleGroup.style.transform = `rotate(${rotation}deg)`;
     });
   });
