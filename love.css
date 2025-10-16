@@ -46,7 +46,7 @@ html, body {
   transform-origin: 50% 50%;
   transition: transform .7s ease-in-out;
   z-index: 20;
-  pointer-events: none;   /* 그룹은 클릭 안 받게 */
+  pointer-events: none;   
 }
 .title-group .word{
   position: absolute;
@@ -121,19 +121,47 @@ body.blur-active #dots .dot {
   transition: filter 0.4s ease;
 }
 
-/* 이미지는 흐려지지 않게 */
+
 #overlayImage,
 #hoverText {
   filter: none !important;
-  z-index: 30;  /* 최상단 */
+  z-index: 30;  
 }
-/* hover 텍스트(원하면 사용) */
+
 #hoverText{
   position: fixed; right:80px; bottom:80px; width:280px;
   font-size:15px; line-height:1.6; color:#000; opacity:0;
   transition:opacity .3s; z-index:30; text-align:left;
 }
 #hoverText.visible{ opacity:1; }
+
+
+
+
+/* 왼쪽 혹은 위쪽 노트 텍스트 */
+#hoverNote {
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  bottom: auto;
+  text-align: left;           
+  font-family: "altesse-std-24pt", sans-serif;
+  font-size: 24px;       
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  white-space: pre-line;  
+  max-width: 350px;       
+  z-index: 20;
+}
+
+
+
+#hoverNote.visible {
+  opacity: 1;
+}
+
 
 /* ===== 절대 지울 것 =====
    아래와 같은 옛 규칙이 파일 어딘가에 남아 있으면 클릭이 절대 안 됩니다.
