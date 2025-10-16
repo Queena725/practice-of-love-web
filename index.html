@@ -5,171 +5,30 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="love.css" />
   <link rel="stylesheet" href="https://use.typekit.net/rpg1trs.css" />
+  <title>Practice of Love</title>
 </head>
-
 <body>
-  <!-- 나머지 콘텐츠들 -->
-  <audio id="heartbeat" src="images/heartbeat-sound.mp3"></audio>
-
-    <script src="script.js" defer></script>
-    </body>
-    
-    <body>
   <!-- nav -->
   <div class="top-left"><a href="authors.html">content</a></div>
   <div class="top-right"><a href="info.html" target="_blank">Info</a></div>
 
-  <!-- Practice / of / Love : 화면 모서리 배치 + 그룹 회전 -->
+  <!-- Title -->
   <div class="title-group" id="titleGroup">
     <div class="word side-left">Practice</div>
     <div class="word side-right">Love</div>
     <div class="word bottom-center">of</div>
   </div>
 
+  <!-- Canvas elements -->
+  <div class="center" id="center"></div>
+  <img id="overlayImage" alt="overlay" />
+  <div class="dots" id="dots"></div>
+  <canvas id="rings"></canvas>
 
-<canvas id="rings"></canvas>
-<div class="center" id="center"></div>
-<div class="dots" id="dots"></div>
-<img id="overlayImage" alt="overlay" />
-</body>
-</html>
+  <!-- Sound -->
+  <audio id="heartbeat" src="images/heartbeat-sound.mp3"></audio>
 
-<div class="center-dot"></div>
-<style>
-
-    
-    
-  :root { --dot-size: 10px; }
-
-  html,body{height:100%; margin:0; font-family: "adobe-garamond-pro", serif;}
-  body {
-    display:flex; align-items:center; justify-content:center;
-    background:#fff; overflow:hidden; position:relative;
-  }
-
-  .top-left{position:absolute; top:20px; left:20px;}
-  .top-right{position:absolute; top:20px; right:20px;}
-  .side-left{position:absolute; left:20px; top:50%; transform:rotate(-90deg) translate(-50%,0); transform-origin:left center;}
-  .side-right{position:absolute; right:20px; top:50%; transform:rotate(90deg) translate(50%,0); transform-origin:right center;}
-  .bottom-center{position:absolute; bottom:20px; left:50%; transform:translateX(-50%);}
-
-
-  .center {
-    position:absolute;
-    top:50%; left:50%;
-    width:80px; height:80px; /* 원래 120px → 줄임 */
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    background:black;
-    z-index:2;
-    pointer-events:none;
-  }
-
-  /* 오버레이 이미지 */
-  #overlayImage{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%) scale(.98);
-    width:250px; height:250px; /* 중앙 원(80px)의 2배 */
-    object-fit:cover;
-
-    z-index:5;
-    opacity:0;
-    transition:opacity .18s ease, transform .18s ease;
-    pointer-events:none;
-  }
-  #overlayImage.visible{
-    opacity:1;
-    transform:translate(-50%,-50%) scale(1);
-  }
-
-/* 점들 전체 컨테이너 */
-.dots {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 100%; height: 100%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  /* pointer-events: none;  ❌ 이 줄을 지워줘 */
-}
-
-/* 각 점 */
-.dot {
-  position: absolute;
-  width: var(--dot-size);
-  height: var(--dot-size);
-  background: black;
-  border-radius: 50%;
-  cursor: pointer;
-  pointer-events: auto; /* ✅ 점만 반응 가능하게 */
-  transition: transform 0.12s ease, opacity 0.18s ease;
-  z-index: 4; /* 살짝 더 앞으로 오게 */
-}
-  .dot:hover { transform:scale(1.25); }
-
-  .dimmed { opacity:0.18 !important; }
-
-  /* 캔버스 */
-  canvas#rings {
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    z-index:1;
-    pointer-events:none;
-    transition:opacity .18s ease;
-  }
-  canvas#rings.dimmed { opacity:0.18; }
-
-  @media (max-width:600px){
-    .center{ width:60px; height:60px; }
-    #overlayImage{ width:120px; height:120px; }
-    :root { --dot-size:9px; }
-  }
-</style>
-</head> 
-</div>
-
-<style>
-  body {
-    margin: 0;
-    font-family: "adobe-garamond-pro", serif;
-    background: #fff;
-  }
-
-  /* Fixed Navigation Bar */
-  .navbar {
-    overflow: hidden;
-    background-color: transparent;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999; /* 다른 요소 위에 보이도록 */
-  }
-
-  .navbar a {
-    float: left;
-    display: block;
-    color: #000000;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-
-  .navbar a:hover {
-    background: transparent;
-    color: black;
-  }
-
-  /* 메인 콘텐츠 위쪽에 여백 */
-  .main {
-    padding: 16px;
-    margin-top: 60px; /* navbar 높이만큼 */
-  }
-</style>
-</head>
-
-
+  <!-- Script -->
+  <script src="script.js" defer></script>
 </body>
 </html>
