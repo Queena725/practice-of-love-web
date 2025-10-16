@@ -168,10 +168,11 @@
   }
 
   // ===== 제목 회전 =====
-let rotation = 0;
-titleGroup.querySelectorAll(".word").forEach(w => {
-  w.addEventListener("click", () => {
-    rotation += 180;
-    titleGroup.style.transform = `rotate(${rotation}deg)`;
-  });
-});
+
+  let rotation = 0;
+  titleGroup.querySelectorAll(".word").forEach(w => {
+    w.addEventListener("click", () => {
+      rotation = (rotation + 180) % 360;
+      titleGroup.style.transform = `rotate(${rotation}deg)`;
+    });
+
