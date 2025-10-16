@@ -3,8 +3,11 @@
   const ctx = canvas.getContext("2d");
   const dotsContainer = document.getElementById("dots");
   const overlay = document.getElementById("overlayImage");
-  const centerEl = document.getElementById("center");
   const heartbeat = document.getElementById("heartbeat");
+  const titleGroup = document.getElementById("titleGroup");
+
+  const COUNT = 22;
+  let imagePool = [];
 
   const texts = [
     "78 5th Ave, New York, NY 10011",
@@ -20,6 +23,21 @@
     "@ 7SoulsDeep, Union Square, NY"
   ];
 
+  const notes = [
+    "With my CD BFA friends\nAt Ariston, we bought a flower, but were gifted blooms—a quiet act of love.",
+    "What Stands Behind the Flowers\n“Love is the greatest of all” -Hilma af Klint",
+    "Bungee Space Book Store\nAt the bookstore, a t-shirt recalled my ex—yet stayed just a shirt, quietly sweet.",
+    "Cafe Ambrosia\nA small heart peeked from the back pocket of her jeans.",
+    "Random store in NY\nHi, Teddy? Hi, New York!",
+    "Front of Leon Bagel\nTruck carrying love",
+    "Lauv Concert_Radio City Music Hall\nThe first heartbreak ended beneath Lauv’s music.",
+    "Sipping cocktails with a waterfall\nBy the waterfall, sipping cocktails with Jessica, our laughter spilled like the water itself.",
+    "Geometry Garden & Floral Shop\nLooking for a gift meant for someone.",
+    "Apollo Bagels\nEnjoying bagels with Serena in the Lower East Side.",
+    "NYABF 2025 Printed Matter, Inc.\nVisiting the book fair with CD friends.",
+    "@ 7SoulsDeep\nFound text in lower Manhattan — Still a kid with dreams."
+  ];
+
   const IMAGE_CANDIDATES = [
     "images/card.jpg","images/card3.jpg","images/card5.jpg","images/card7.jpg",
     "images/card8.jpg","images/card9.jpg","images/card10.jpg","images/card11.jpg",
@@ -28,14 +46,7 @@
     "images/card23.jpg","images/card25.jpg","images/card26.jpg","images/card29.jpg"
   ];
 
-  let imagePool = [];
-  const COUNT = 30;
-
-  preloadImages(IMAGE_CANDIDATES).then(good => {
-    imagePool = good.length ? good : IMAGE_CANDIDATES;
-    startIntroAnimation();
-  });
-
+  // ===== 이미지 미리 로드 =====
   function preloadImages(paths) {
     return Promise.all(paths.map(src => new Promise(resolve => {
       const img = new Image();
@@ -45,160 +56,123 @@
     }))).then(results => results.filter(r => r.ok).map(r => r.src));
   }
 
-  // =================  INTRO ANIMATION =================
-  function startIntroAnimation() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  preloadImages(IMAGE_CANDIDATES).then(good => {
+    imagePool = good.length ? good : IMAGE_CANDIDATES;
+    initDots();
+  });
 
-    const easeOut = t => 1 - Math.pow(1 - t, 3);
-    const T_TOTAL = 800;
-
-    // 초기 상태
-    centerEl.style.opacity = 0;
-    centerEl.style.transform = "translate(-50%, -50%) scale(0.66)";
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    dotsContainer.innerHTML = "";
-
-    // ===== 점 생성 (처음엔 숨김) =====
-    const outerR = Math.min(window.innerWidth, window.innerHeight) * 0.27;
-    const dotR = outerR + 35;
-    const dotSize = 10;
+  // ===== 점 생성 및 인터랙션 =====
+  function initDots() {
     const dots = [];
 
-    for (let i = 0; i < COUNT; i++) {
-      const angle = (i / COUNT) * Math.PI * 2;
-      const x = dotR * Math.cos(angle);
-      const y = dotR * Math.sin(angle);
-
-      const dot = document.createElement("div");
-      dot.className = "dot";
-      dot.style.left = `calc(50% + ${x}px - ${dotSize / 2}px)`;
-      dot.style.top = `calc(50% + ${y}px - ${dotSize / 2}px)`;
-      dot.style.background = "#000";
-      dot.style.opacity = "0"; // 처음엔 안 보이게
-      dot.style.transition = "opacity 0.4s ease";
-      dotsContainer.appendChild(dot);
-      dots.push(dot);
+    function outerR() {
+      return Math.min(window.innerWidth, window.innerHeight) * 0.30;
     }
 
-    // ================= 애니메이션 프레임 =================
-    const start = performance.now();
-    let didReveal = false; // 중복 방지
-
-    function frame(now) {
-      const t = Math.min((now - start) / T_TOTAL, 1);
-      const k = easeOut(t);
-
-      // 중앙 점
-      centerEl.style.opacity = k;
-      centerEl.style.transform = `translate(-50%, -50%) scale(${0.2 + 0.8 * k})`;
-
-      // 링 (네 원래 버전)
+    function drawRings() {
       const cx = canvas.width / 2, cy = canvas.height / 2;
-      const outerR = Math.min(window.innerWidth, window.innerHeight) * 0.27;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.lineWidth = 0.8;
-      ctx.strokeStyle = `rgba(0,0,0,${0.18 * k})`;
-      for (let r = 50; r < outerR; r += 5) {
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(0,0,0,0.18)";
+      const centerRadius = 40, maxR = outerR() - 15;
+      for (let r = centerRadius + 15; r < maxR; r += 8) {
         ctx.beginPath();
         ctx.arc(cx, cy, r, 0, Math.PI * 2);
         ctx.stroke();
       }
-
-      if (t < 1) {
-        requestAnimationFrame(frame);
-      } else if (!didReveal) {
-        didReveal = true;
-
-        // 회색 → 검정 → 깜빡
-        setTimeout(() => {
-          dots.forEach(dot => (dot.style.opacity = "0.15")); // 회색
-          setTimeout(() => {
-            dots.forEach(dot => (dot.style.opacity = "1")); // 검정
-            setTimeout(() => {
-              dots.forEach(dot => (dot.style.opacity = "0")); // 깜빡 사라짐
-              setTimeout(() => {
-                dots.forEach(dot => (dot.style.opacity = "1")); // 다시 등장
-              }, 150);
-            }, 150);
-          }, 300);
-        }, 300);
-
-        enableDotInteractions(dots);
-      }
     }
 
-    // ✅ 애니메이션 시작
-    requestAnimationFrame(frame);
-  }
+    function positionDots() {
+      const half = 6;
+      const R = outerR();
+      dots.forEach((dot, i) => {
+        const a = (i / COUNT) * Math.PI * 2;
+        const x = R * Math.cos(a);
+        const y = R * Math.sin(a);
+        dot.style.left = `calc(50% + ${x}px - ${half}px)`;
+        dot.style.top = `calc(50% + ${y}px - ${half}px)`;
+      });
+    }
 
-  // ================= 🖱️ HOVER / CLICK 기능 =================
-  function enableDotInteractions(dots) {
-    const hoverText = document.createElement("div");
-    hoverText.id = "hoverText";
-    document.body.appendChild(hoverText);
+    // 점 + 이벤트 생성
+    for (let i = 0; i < COUNT; i++) {
+      const dot = document.createElement("div");
+      dot.className = "dot";
 
-    dots.forEach((dot, i) => {
       dot.addEventListener("mouseenter", () => {
         const pool = imagePool.length ? imagePool : IMAGE_CANDIDATES;
         const idx = i % pool.length;
+
         overlay.src = pool[idx];
         overlay.classList.add("visible");
-        hoverText.textContent = texts[i % texts.length] || "";
-        hoverText.classList.add("visible");
-        document.body.classList.add("blur-active");
+
+        showHoverText(texts[i % texts.length], notes[i % notes.length]);
+        dots.forEach(d => { if (d !== dot) d.classList.add("dimmed"); });
+        canvas.classList.add("dimmed");
       });
 
       dot.addEventListener("mouseleave", () => {
         overlay.classList.remove("visible");
-        hoverText.classList.remove("visible");
-        document.body.classList.remove("blur-active");
+        hideHoverText();
+        dots.forEach(d => d.classList.remove("dimmed"));
+        canvas.classList.remove("dimmed");
       });
+
+      dot.addEventListener("click", () => {
+        heartbeat.currentTime = 0;
+        heartbeat.volume = 0.4;
+        heartbeat.play().then(() => {
+          setTimeout(() => {
+            heartbeat.pause();
+            heartbeat.currentTime = 0;
+          }, 2000);
+        });
+      });
+
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    }
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawRings();
+      positionDots();
     });
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    drawRings();
+    positionDots();
   }
 
-  // 🔄 회전
-  const titleGroup = document.getElementById("titleGroup");
-  if (titleGroup) {
-    let rotation = 0;
-    titleGroup.querySelectorAll(".word").forEach(w => {
-      w.addEventListener("click", () => {
-        rotation += 180;
-        titleGroup.style.transition = "transform 1s ease";
-        titleGroup.style.transform = `rotate(${rotation}deg)`;
-      });
-    });
+  // ===== Hover 텍스트 표시 함수 =====
+  const hoverText = document.createElement("div");
+  hoverText.id = "hoverText";
+  document.body.appendChild(hoverText);
+
+  const hoverNote = document.createElement("div");
+  hoverNote.id = "hoverNote";
+  document.body.appendChild(hoverNote);
+
+  function showHoverText(text, note) {
+    hoverText.textContent = text;
+    hoverText.classList.add("visible");
+    hoverNote.textContent = note;
+    hoverNote.classList.add("visible");
   }
+
+  function hideHoverText() {
+    hoverText.classList.remove("visible");
+    hoverNote.classList.remove("visible");
+  }
+
+  // ===== 제목 회전 =====
+  let rotation = 0;
+  titleGroup.querySelectorAll(".word").forEach(w => {
+    w.addEventListener("click", () => {
+      rotation = (rotation + 90) % 360;
+      titleGroup.style.transform = `rotate(${rotation}deg)`;
+    });
+  });
 })();
-
-// ================= 💓 HEARTBEAT SOUND =================
-
-// 유저가 클릭하면 처음 한 번 재생 + 이후 10초마다 반복
-window.addEventListener("click", initHeartbeatOnce);
-window.addEventListener("touchstart", initHeartbeatOnce);
-
-function initHeartbeatOnce() {
-  const heartbeat = document.getElementById("heartbeat");
-  if (!heartbeat) return;
-
-  heartbeat.volume = 0.25; // 🔈 소리 크기 (0~1)
-  playHeartbeat();
-
-  // 10초마다 재생
-  setInterval(playHeartbeat, 10000);
-
-  // 클릭 이벤트 중복 방지
-  window.removeEventListener("click", initHeartbeatOnce);
-  window.removeEventListener("touchstart", initHeartbeatOnce);
-}
-
-function playHeartbeat() {
-  const heartbeat = document.getElementById("heartbeat");
-  if (!heartbeat) return;
-
-  heartbeat.currentTime = 0;
-  heartbeat.play().catch(err => console.warn("play blocked:", err));
-
-  // 진동 (옵션)
-  if (navigator.vibrate) navigator.vibrate(180);
-}
